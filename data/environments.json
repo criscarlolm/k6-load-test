@@ -1,0 +1,20 @@
+{
+    "production": {
+        "baseUrl": "https://www.lawyerslegallaws.com/",
+        "selectors": {
+            "mainHeadingLogo": "img[alt='Lawyers Legal Laws']"
+        }
+    },
+    "www3": {
+        "baseUrl": "https://lawyerslegallaws3.aws.legalmatch.com",
+        "selectors": {
+            "mainHeadingLogo": "img[alt='Lawyers Legal Laws']"
+        }
+    },
+    "www9": {
+        "baseUrl": "https://lawyerslegallaws9.aws.legalmatch.com/",
+        "selectors": {
+            "mainHeadingLogo": "img[alt='Lawyers Legal Laws']"
+        }
+    }
+}
