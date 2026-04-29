@@ -1,6 +1,28 @@
 import { httpMetrics, httpCasePostingMetrics } from '../data/data.js';
 import http from 'k6/http';
 
+// Shared Chromium launch options used by every scenario below.
+//
+//   --no-sandbox            required when running as root (Linux CI / VMs).
+//                           Harmless on Windows / non-root Linux.
+//   --disable-dev-shm-usage avoids "Out of memory" crashes in containers
+//                           where /dev/shm is small (e.g. Docker default 64 MB).
+//
+// Append more args at runtime with K6_BROWSER_EXTRA_ARGS (comma-separated):
+//   K6_BROWSER_EXTRA_ARGS="--proxy-server=...,--disable-gpu"
+function browserOptions() {
+    const extra = (__ENV.K6_BROWSER_EXTRA_ARGS || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+    return {
+        type: 'chromium',
+        launchOptions: {
+            args: ['--no-sandbox', '--disable-dev-shm-usage', ...extra],
+        },
+    };
+}
+
 export function perVUiterations() {
     const vu = `${__ENV.VUS}`;
     const iteration = `${__ENV.ITER}`;
@@ -9,11 +31,7 @@ export function perVUiterations() {
         scenarios: {
             ui: {
                 executor: 'per-vu-iterations',
-                options: {
-                    browser: {
-                        type: 'chromium'
-                    }
-                },
+                options: { browser: browserOptions() },
                 vus: vu,
                 iterations: iteration,
                 maxDuration: maxDuration
@@ -81,11 +99,7 @@ export function rampingScenario() {
                     { duration: rampDown, target: 0     },
                 ],
                 gracefulRampDown: '30s',
-                options: {
-                    browser: {
-                        type: 'chromium'
-                    }
-                }
+                options: { browser: browserOptions() }
             }
         },
         thresholds: {
@@ -132,11 +146,7 @@ export function singlePassRamping() {
                     { duration: rampDown, target: 0      },
                 ],
                 gracefulRampDown: '30s',
-                options: {
-                    browser: {
-                        type: 'chromium'
-                    }
-                }
+                options: { browser: browserOptions() }
             }
         },
         thresholds: {
