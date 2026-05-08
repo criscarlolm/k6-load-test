@@ -33,7 +33,7 @@ export const saveCaseForm = {
     lastName: lastName,
     zipCode: '00001',
     telNumber: '4354355345',
-    emailAddress: 'testautcypressapi@guerrillamail.com'
+    emailAddress: 'loadtest1001@yopmail.com'
 };
 
 export const httpMetrics = {
