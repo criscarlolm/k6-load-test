@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Pass 1 only: ramp 0 -> 15 VUs over 10m, hold 5m, ramp down 2m.
+# Pass 1 only: ramp 0 -> 16 VUs over 10m, hold 5m, ramp down 2m.
 #
-# Goal: measure failures during the 10-minute ramp-up to 15 concurrent users.
+# Goal: measure failures during the 10-minute ramp-up to 16 concurrent users.
 #
 # Usage:
 #   bash k6/scripts/run-case-posting-pass1.sh -e DOMAIN=www9.aws.legalmatch.com
@@ -13,7 +13,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-TARGET="${TARGET:-15}"
+TARGET="${TARGET:-16}"
 RAMP_UP="${RAMP_UP:-10m}"
 HOLD="${HOLD:-5m}"
 RAMP_DOWN="${RAMP_DOWN:-2m}"
